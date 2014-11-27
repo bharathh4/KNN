@@ -26,7 +26,7 @@ Class3_X=transpose(Class3_X);%Each feature in a column
 
 
 X= [Class1_X ;Class2_X ;Class3_X];
-Y=[ones(2000,1) ;2*ones(2000,1);3*ones(2000,1)]
+Y=[ones(2000,1) ;2*ones(2000,1);3*ones(2000,1)];
 
 % rloss=[];
 % for i=1:1:100
