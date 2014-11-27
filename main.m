@@ -65,3 +65,13 @@ normalMat=(1/(length(testFeatures)/3))*confusionMatrix
 %     0.0004    0.8903    0.0753
 %     0.0100    0.1053    0.9095
 
+profile on
+
+predicted =[predicted predict(mdl,testFeatures(200,1:16))]
+actual=[actual testFeatures(100,17)]
+
+profile viewer
+p = profile('info');
+profsave(p,'profile_results')
+
+
