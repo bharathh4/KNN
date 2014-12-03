@@ -58,12 +58,12 @@ confusionMatrix=confusionmat(predicted,actual);
 %           15           8        1959
 
 
-normalMat=(1/2000)*confusionMatrix
-normalMat =
-
-    0.9660    0.0420    0.0130
-    0.0265    0.9540    0.0075
-    0.0075    0.0040    0.9795
+% normalMat=(1/2000)*confusionMatrix
+% normalMat =
+% 
+%     0.9660    0.0420    0.0130
+%     0.0265    0.9540    0.0075
+%     0.0075    0.0040    0.9795
 
 
 

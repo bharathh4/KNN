@@ -1,8 +1,7 @@
-% testing function
+%% Compute confusion matrix for one pass
 clear all
 clc
 close all
-
 
 load SubSetNormalizedFeaturesSet2.mat
 y=SubSetNormalizedFeaturesSet2;
@@ -47,8 +46,8 @@ actual=[];
 
 mdl=ClassificationKNN.fit(trainFeatures(:,1:16),trainFeatures(:,17),'NumNeighbors',3);
 
-predicted=[]
-actual=[]
+predicted=[];
+actual=[];
 for i=1:length(testFeatures)
 predicted =[predicted predict(mdl,testFeatures(i,1:16))];
 actual=[actual testFeatures(i,17)];
@@ -57,19 +56,17 @@ end
 confusionMatrix=confusionmat(predicted,actual);
 
 normalMat=(1/(length(testFeatures)/3))*confusionMatrix
-
-
-% normalMat =
-% 
-%     0.9896    0.0044    0.0152
-%     0.0004    0.8903    0.0753
-%     0.0100    0.1053    0.9095
+normalMat=transpose(normalMat)
 
 
 
-predicted =[predicted predict(mdl,testFeatures(200,1:16))]
-actual=[actual testFeatures(100,17)]
+profile on
 
+predicted =[predicted predict(mdl,testFeatures(200,1:16))];
+actual=[actual testFeatures(200,17)];
 
-
+profile viewer
+p = profile('info');
+profsave(p,'profile_results')
+profile off
 

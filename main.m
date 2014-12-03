@@ -1,8 +1,62 @@
-% testing function
+%% Quick Test : Classify a feature 
+
+clc
+clear all
+close all
+
+load SubSetNormalizedFeaturesSet2.mat
+y=SubSetNormalizedFeaturesSet2;
+clear SubSetNormalizedFeaturesSet2;
+
+class1=y(1:7660,1:16);
+class2=y(7660:7660*2,1:16);
+class3=y(7660*2:7660*3,1:16);
+
+%Specify number of neighbours
+numNeighbours=3;
+%Specify amount of training data/search space
+percentage_training=70;
+
+%Switch on the profiler for timing information
+%profile on
+
+% Plug a feature vector from class 1
+label=knn_classify(numNeighbours,percentage_training,class1(200,1:16)) % Should give 1 when we plug the 200th observation of class 1
+
+% % Plug a feature vector from class 2
+% label=knn_classify(numNeighbours,percentage_training,class2(200,1:16)) % Should give 2 when we plug the 200th observation of class 2
+% 
+% % Plug a feature vector from class 3
+% label=knn_classify(numNeighbours,percentage_training,class3(200,1:16)) % Should give 3 when we plug the 200th observation of class 3
+
+% Check profiler for timing information of the function
+ profile viewer
+% p = profile('info');
+% profsave(p,'profile_results')
+% profile off
+%%
+
+%% Calculate average confusion matrix.For a quick test set numIterations=2 and numNeighbours=3 
+
+load SubSetNormalizedFeaturesSet2.mat
+y=SubSetNormalizedFeaturesSet2;
+clear SubSetNormalizedFeaturesSet2;
+%Set number of times to re-randomize and calculate confusion matrix and
+% average. Beware large values can take a long time to compute.
+numIterations=10; 
+
+% Set number of neighbours for majority vote
+numNeighbours=3;
+percentage_training=70;
+% The average confusion matrix
+avgConfusion=statisticalAvgConfusionMatrix(numIterations,numNeighbours,percentage_training)
+
+%%
+
+%% Compute confusion matrix for one pass with number of neighbours being 3 and training data percent being 70.Helps visualize the flow.
 clear all
 clc
 close all
-
 
 load SubSetNormalizedFeaturesSet2.mat
 y=SubSetNormalizedFeaturesSet2;
@@ -47,8 +101,8 @@ actual=[];
 
 mdl=ClassificationKNN.fit(trainFeatures(:,1:16),trainFeatures(:,17),'NumNeighbors',3);
 
-predicted=[]
-actual=[]
+predicted=[];
+actual=[];
 for i=1:length(testFeatures)
 predicted =[predicted predict(mdl,testFeatures(i,1:16))];
 actual=[actual testFeatures(i,17)];
@@ -57,21 +111,7 @@ end
 confusionMatrix=confusionmat(predicted,actual);
 
 normalMat=(1/(length(testFeatures)/3))*confusionMatrix
-
-
-% normalMat =
-% 
-%     0.9896    0.0044    0.0152
-%     0.0004    0.8903    0.0753
-%     0.0100    0.1053    0.9095
-
-profile on
-
-predicted =[predicted predict(mdl,testFeatures(200,1:16))]
-actual=[actual testFeatures(100,17)]
-
-profile viewer
-p = profile('info');
-profsave(p,'profile_results')
+normalMat=transpose(normalMat)
+%%
 
 
