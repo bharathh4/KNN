@@ -8,9 +8,13 @@ load SubSetNormalizedFeaturesSet2.mat
 y=SubSetNormalizedFeaturesSet2;
 clear SubSetNormalizedFeaturesSet2;
 
-class1=y(1:7660,1:16);
-class2=y(7660:7660*2,1:16);
-class3=y(7660*2:7660*3,1:16);
+% load NormalizedFeaturesSet2.mat
+% y=NormalizedFeaturesSet2;
+% clear NormalizedFeaturesSet2;
+
+num_features=size(y,2)-1
+
+[class1, class2 ,class3]=prepareData(y);
 
 %Specify number of neighbours
 numNeighbours=3;
@@ -30,7 +34,7 @@ label=knn_classify(numNeighbours,percentage_training,class1(200,1:16)) % Should 
 % label=knn_classify(numNeighbours,percentage_training,class3(200,1:16)) % Should give 3 when we plug the 200th observation of class 3
 
 % Check profiler for timing information of the function
- profile viewer
+% profile viewer
 % p = profile('info');
 % profsave(p,'profile_results')
 % profile off
@@ -38,16 +42,13 @@ label=knn_classify(numNeighbours,percentage_training,class1(200,1:16)) % Should 
 
 %% Calculate average confusion matrix.For a quick test set numIterations=2 and numNeighbours=3 
 
-load SubSetNormalizedFeaturesSet2.mat
-y=SubSetNormalizedFeaturesSet2;
-clear SubSetNormalizedFeaturesSet2;
 %Set number of times to re-randomize and calculate confusion matrix and
 % average. Beware large values can take a long time to compute.
-numIterations=10; 
+numIterations=1; 
 
 % Set number of neighbours for majority vote
 numNeighbours=3;
-percentage_training=70;
+percentage_training=95;
 % The average confusion matrix
 avgConfusion=statisticalAvgConfusionMatrix(numIterations,numNeighbours,percentage_training)
 

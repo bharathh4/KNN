@@ -9,9 +9,13 @@ load SubSetNormalizedFeaturesSet2.mat
 y=SubSetNormalizedFeaturesSet2;
 clear SubSetNormalizedFeaturesSet2;
 
-class1=y(1:7660,1:16);
-class2=y(7660:7660*2,1:16);
-class3=y(7660*2:7660*3,1:16);
+% load NormalizedFeaturesSet2.mat
+% y=NormalizedFeaturesSet2;
+% clear NormalizedFeaturesSet2;
+
+num_features=size(y,2)-1
+
+[class1, class2 ,class3]=prepareData(y);
 
 % percentage_training=70;
 percentage_testing=100-percentage_training;
@@ -35,7 +39,7 @@ cTrain3=[train_samples_class3 3*ones(length(train_samples_class3),1)];
 
 trainFeatures=[cTrain1;cTrain2;cTrain3];
 
-mdl=ClassificationKNN.fit(trainFeatures(:,1:16),trainFeatures(:,17),'NumNeighbors',numNeighbours);
+mdl=ClassificationKNN.fit(trainFeatures(:,1:num_features),trainFeatures(:,num_features+1),'NumNeighbors',numNeighbours);
 
 predicted =predict(mdl,feature);
 

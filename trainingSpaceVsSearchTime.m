@@ -12,7 +12,7 @@ time=[24.5 72 105 132]
 num_train_samples=c*[90 70 50 20]
 
 
-normalTimes=time./num_test_samples;% Time taken to execute per sample
+normalTimes=time./num_test_samples % Time taken to execute per sample
 
 stem(num_train_samples,normalTimes)
 xlabel('Number of training samples/search space')
